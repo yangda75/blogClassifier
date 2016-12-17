@@ -6,6 +6,7 @@ from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
+
 def getLinks(url):
     try:
         html = urlopen(url)
@@ -13,11 +14,18 @@ def getLinks(url):
         print(e)
         return "error occured"
     else:
-        newObj = BeautifulSoup(html,"html.parser")
+        newObj = BeautifulSoup(html, "html.parser")
         if newObj is not None:
             links = []
             for link in newObj.findAll("a"):
                 links.append(link)
-            return links
+                return links
         else:
             return "error occured"
+
+
+def getLinks(url):
+    html = urlopen(url)
+    bsObj = BeautifulSoup(html, "html.parser")
+    for link in bsObj.find():
+        pass
