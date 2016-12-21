@@ -30,8 +30,9 @@ def rmTags(filePath):
         os.remove(opPath)
     out = open(opPath,'a')
 
+    tags = re.compile(r'<[^>]+>',re.S)
     for line in html:
-        line = line.replace(re.compile("^<.*>$"), ' ')
+        line = tags.sub(' ',line)
         out.write(line)
     out.close()
 
