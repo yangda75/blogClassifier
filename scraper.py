@@ -5,6 +5,7 @@ scrap blogs from the web and save them
 from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
+import re
 
 
 def getLinks(url):
@@ -24,8 +25,10 @@ def getLinks(url):
             return "error occured"
 
 
-def getLinks(url):
-    html = urlopen(url)
-    bsObj = BeautifulSoup(html, "html.parser")
-    for link in bsObj.find():
-        pass
+def getExtLinks(bsObj, excludeURL):
+    externalLinks = set()
+    for link in bsObj.findAll(
+            "a", href=re.compile("^(http|www)((?!" + excludeURL + ").)*$")):
+        if link.attrs['href'] not in externalLinks:
+            externalLinks.add(link.attrs['href'])
+    return externalLinks
