@@ -14,6 +14,8 @@ hotWords(wordsVec,n)    : hotWordsVec
 import re
 import os
 import operator
+import string
+
 
 def rmTags(filePath):
     """
@@ -22,17 +24,17 @@ def rmTags(filePath):
     input: the file(e.g. post.txt) with unwanted HTML tags
     output: "post.txt.tagFree" with no HTML tags
     """
-    f = open(filePath,'r')
+    f = open(filePath, 'r')
     html = f.readlines()
     f.close()
-    opPath = filePath+".noTag"
+    opPath = filePath + ".noTag"
     if os.path.isfile(opPath):
         os.remove(opPath)
-    out = open(opPath,'a')
+    out = open(opPath, 'a')
 
-    tags = re.compile(r'<[^>]+>',re.S)
+    tags = re.compile(r'<[^>]+>', re.S)
     for line in html:
-        line = tags.sub(' ',line)
+        line = tags.sub(' ', line)
         out.write(line)
     out.close()
 
@@ -50,7 +52,7 @@ def rmPunct(filePath):
     if os.path.isfile(opPath):
         os.remove(opPath)
     opFile = open(opPath, 'a')
-    
+
     for line in text:
         opLine = line.replace('-', ' ')
         opLine = ''.join(c for c in opLine if c not in string.punctuation)
@@ -65,7 +67,7 @@ def wordsFreq(filePath):
     """
     # description: calculate the vector of given file(e.g. post.txt) #
     input: path to a file
-    output: 1. the vector of this text document, with each element in the from of 
+    output: 1. the vector of this text document, with each element in the from of
             "word":times appeared, in the form of a dict
             2. the numbers of words in this document, which is an integer
     """
@@ -90,8 +92,7 @@ def wordsFreq(filePath):
     # get frequency of each word
     for t in tokens:
         freqVocab[t] += 1
-    wordsVec = sorted(
-        freqVocab.items(), key=operator.itemgetter(1), reverse=1)
+    wordsVec = sorted(freqVocab.items(), key=operator.itemgetter(1), reverse=1)
 
     return wordsVec, wordsCount
 
@@ -102,6 +103,15 @@ def lenFreq(wordsVec):
         lenVec[len(i[0])] += i[1]
     return lenVec
 
+
 def hotWords(wordsVec, n):
     return [t[0] for t in wordsVec[:n]]
 
+
+def prepare(filePath):
+    f1 = rmTags(filePath)
+    f = rmPunct(f1)
+    wordsVec, wordsCount = wordsFreq(f)
+    hotWords = hotWords(wordsVec)
+
+    return wordsVec, wordsCount, hotWords
