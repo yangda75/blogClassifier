@@ -4,8 +4,8 @@ scrap blogs from the web and save them
 
 from urllib.request import urlopen
 from urllib.error import HTTPError
-from bs4 import BeautifulSoup
 import re
+from bs4 import BeautifulSoup
 
 
 def getLinks(url):

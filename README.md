@@ -4,8 +4,9 @@
 
 原理简述：
 1. 爬取文章：
-  接受的输入为medium用户名，爬取该用户的文章。使用scrapy。    
-  关于meidum网站的URL分析参考了[github项目](https://gist.github.com/yurivictor/7798679)
+  接受的输入为medium用户名，爬取该用户的文章。使用requests和BeautifulSoup。    
+  **注意**：medium.com不允许爬虫，所以请勿使用本程序    
+  关于meidum.com的URL分析参考了[github项目](https://gist.github.com/yurivictor/7798679)
 2. 文本特征向量生成：
   - 输入HTML文件路径
   - 去除HTML标签
