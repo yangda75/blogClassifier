@@ -21,3 +21,13 @@
 
 ##### 3. 文本分类：    
   - 原理：朴素贝叶斯分类器(Naive Bayes Classifier)
+
+
+
+### 项目结构
+.
+├── main.py
+├── prepare.py
+├── README.md
+├── requirements.txt
+└── scraper.py
