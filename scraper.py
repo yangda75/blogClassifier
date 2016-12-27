@@ -1,5 +1,5 @@
 """
-scrap blogs from the web and save them
+scrape blogs from the web and save them
 """
 
 # from urllib.request import urlopen
@@ -32,7 +32,7 @@ from bs4 import BeautifulSoup
 #             externalLinks.add(link.attrs['href'])
 #     return externalLinks
 
-
+# after update, emacs flycheck becomes rather aggressive, cammelCase is regarded as improper
 def get_rec10(username):
     """
     accepts a username and returns ten recent articles of that user in the
