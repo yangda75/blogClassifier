@@ -112,6 +112,6 @@ def prepare(filePath):
     f1 = rmTags(filePath)
     f = rmPunct(f1)
     wordsVec, wordsCount = wordsFreq(f)
-    hotWords = hotWords(wordsVec)
+    hot = hotWords(wordsVec, 30)
 
-    return wordsVec, wordsCount, hotWords
+    return wordsVec, wordsCount, hot
