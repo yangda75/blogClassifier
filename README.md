@@ -4,6 +4,16 @@
 
 从[medium.com](https://medium.com)上抓取文章，存储在本地然后分类，显示分类标签。
 
+### 运行方法
+**注意**: 本程序使用python3.5    
+GNU/Linux 或 macOS 命令行：    
+先进入项目根目录，然后运行
+```
+$ pip install -r requirements.txt
+$ python main.py
+```
+Windows powershell：
+
 ### 原理简述：
 
 ##### 1. 爬取文章：    
@@ -25,9 +35,12 @@
 
 
 ### 项目结构
-.
-├── main.py
-├── prepare.py
-├── README.md
-├── requirements.txt
+~~~~
+$ tree .
+.    
+├── main.py    
+├── prepare.py    
+├── README.md    
+├── requirements.txt     
 └── scraper.py
+~~~~
