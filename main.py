@@ -24,7 +24,7 @@ class MainWin():
             return False
 
     def analyze(self, userid):
-        prepare.
+        pass
 
 def getParam():
     pass
