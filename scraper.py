@@ -5,8 +5,9 @@ scrape blogs from the web and save them
 # from urllib.request import urlopen
 # from urllib.error import HTTPError
 import time
-import requests
+import os
 from bs4 import BeautifulSoup
+import requests
 
 # def getLinks(url):
 #     try:
@@ -32,13 +33,14 @@ from bs4 import BeautifulSoup
 #             externalLinks.add(link.attrs['href'])
 #     return externalLinks
 
+
 # after update, emacs flycheck becomes rather aggressive, cammelCase is regarded as improper
-def get_rec10(username):
+def get_rec10(userid):
     """
     accepts a username and returns ten recent articles of that user in the
     form of BeautifulSoup objects
     """
-    url = "https://medium.com/@" + username + "/latest"
+    url = "https://medium.com/@" + userid + "/latest"
     user_page = requests.get(url)
     soup = BeautifulSoup(user_page, "html5lib")
     articles = []
@@ -47,3 +49,15 @@ def get_rec10(username):
         time.sleep(10)  #sleep for a while to avoid being banned
         articles.append(BeautifulSoup(requests.get(link), "html5lib"))
     return articles
+
+
+def get_vec(userid, articles):
+    outpath = os.path.join('./', userid)
+    if not os.path.exists(outpath):
+        os.makedirs(outpath)
+    i = 0
+    for article in articles:
+        i += 1
+        fout = open(os.path.join(outpath, 'article' + str(i) + '.txt'), 'w')
+        fout.write(article.find('div', {'class', 'section-inner'}).prettify())
+        fout.close()
