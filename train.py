@@ -9,6 +9,7 @@ files = {'teen_f': [],
 
 
 def count(file_path, vocab):
+    tot = 0
     f = open(file_path, encoding="latin-1")
     for line in f.readlines():
         if line == '':
@@ -16,12 +17,18 @@ def count(file_path, vocab):
         if line[0] == '<':
             continue
         # rm punctuation
-        new_line = ''.join(c for c in line if c not in string.punctuation)
+        line.replace('-', ' ')
+        line.replace('&nbsp', ' ')
+        new_line = ''.join(c.lower() for c in line
+                           if c not in string.punctuation)
         for word in new_line.split(' '):
-            if word not in vocab.keys():
-                vocab[word] = 1
-            else:
-                vocab[word] += 1
+            tot += 1
+            if len(word) <= 20:
+                if word not in vocab.keys():
+                    vocab[word] = 1
+                else:
+                    vocab[word] += 1
+    return tot
 
 
 def train(data_folder):
@@ -48,12 +55,14 @@ def train(data_folder):
                     tag = 'mature_m'
             files[tag].append(f)
     # count words
-    for tag in files.keys():
+    for tag in files:
         vocab = {}
+        tot = 0
         for f in files[tag]:
             file_path = os.path.join(data_folder, f)
-            count(file_path, vocab)
+            tot += count(file_path, vocab)
+        print('{0} has {1} words in total'.format(tag, tot))
         # write the dict into a csv file
-        outfile = open(tag + '.csv', 'w')
-        [outfile.write('{0},{1}\n'.format(word, num))
-         for word, num in vocab.items()]
+        outfile = open(tag + '.csv', 'w', encoding="utf-8")
+        for word, num in vocab.items():
+            outfile.write('{0},{1}\n'.format(word, num * 1.0))
