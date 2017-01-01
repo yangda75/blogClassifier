@@ -23,10 +23,16 @@ class MainWin():
             master,
             text="start",  # command=self.gen_tag()
         )
-
+        # labels
+        instruction = tkinter.Label(
+            master,
+            text="enter a medium userid, then press start button")
+        label1 = tkinter.Label(master, text="userid: ")
         # arrange the UI components
+        instruction.grid(row=0, columnspan=3)
         self.entry.grid(row=1, column=1)
         self.start_button.grid(row=1, column=2)
+        label1.grid(row=1, column=0)
 
     def validate(self, new_text):
         if not new_text:

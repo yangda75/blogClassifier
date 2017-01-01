@@ -18,8 +18,8 @@ def count(file_path, vocab):
             continue
         # rm punctuation
         new_line = line.replace('-', ' ')
-        new_line=new_line.replace('&nbsp', ' ')
-        new_line=new_line.replace('\t',' ')
+        new_line = new_line.replace('&nbsp', ' ')
+        new_line = new_line.replace('\t', ' ')
         new_line = ''.join(c.lower() for c in new_line
                            if c not in string.punctuation)
         for word in new_line.split(' '):
@@ -66,4 +66,5 @@ def train(data_folder):
         # write the dict into a csv file
         outfile = open(tag + '.csv', 'w', encoding="utf-8")
         for word, num in vocab.items():
-            outfile.write('{0},{1}\n'.format(word, num * 1.0))
+            if num != 1:
+                outfile.write('{0},{1}\n'.format(word, num * 1.0 / tot))
