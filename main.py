@@ -5,7 +5,12 @@ import prepare
 import scraper
 
 TAGS = ['teen_f', 'teen_m', 'adult_f', 'adult_m', 'mature_f', 'mature_m']
-
+MINIMAL_PROB={'teen_f':1/26694629,
+              'teen_m':1/26829390,
+              'adult_f':1/40553782,
+              'adult_m':1/39002136,
+              'mature_f':1/16526313,
+              'mature_m':1/15941756}
 
 class MainWin():
     def __init__(self, master):
@@ -77,8 +82,11 @@ def analyze(userid):
             for tag in TAGS:
                 probability[tag] = 1.0
                 for word in hot_words:
-                    probability[tag] *= tag_vocab[tag][word]
-            results.append(max(probability, keys=probability.get))
+                    try:
+                        probability[tag] *= tag_vocab[tag][word]
+                    except KeyError:
+                        probability[tag] *= MINIMAL_PROB[tag]
+                        results.append(max(probability, keys=probability.get))
     return results
 
 
