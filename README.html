@@ -727,7 +727,6 @@ pre {
 <a id="user-content-medium-博客分类器" class="anchor" href="#medium-%E5%8D%9A%E5%AE%A2%E5%88%86%E7%B1%BB%E5%99%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Medium 博客分类器</h1>
 
 <p>作者：杨达 <a href="https://github.com/bill363yang">@bill363yang</a><br>
-学号：515020910119<br>
 邮箱：<a href="mailto:yangda@sjtu.edu.cn">yangda@sjtu.edu.cn</a>
      <a href="mailto:billyang363@gmail.com">billyang363@gmail.com</a></p>
 
@@ -737,16 +736,22 @@ pre {
 <p>从<a href="https://medium.com">medium.com</a>上抓取文章，存储在本地然后分类，显示分类标签。</p>
 
 <h3>
-<a id="user-content-运行方法" class="anchor" href="#%E8%BF%90%E8%A1%8C%E6%96%B9%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>运行方法</h3>
+<a id="user-content-使用说明" class="anchor" href="#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用说明</h3>
 
 <p><strong>注意</strong>: 本程序使用python3.5<br>
-GNU/Linux 或 macOS 命令行：<br>
-进入项目目录，运行</p>
+1. GNU/Linux 或 macOS 命令行 或Windows Powershell：<br>
+  进入项目目录，运行</p>
 
-<div class="highlight highlight-source-shell"><pre>$ pip install -r requirements.txt
-$ python main.py</pre></div>
+<div class="highlight highlight-source-shell"><pre>  $ pip install -r requirements.txt
+  $ python main.py</pre></div>
 
-<p>Windows 类似</p>
+<ol>
+<li><p>程序启动后，屏幕上会出现一个标题为"Naive bayes blog classifier"的GUI窗口。在输入框中输入一个合法的medium.com用户名（注意是个人用户），然后按下start按钮，等待大约两分钟。两分钟的运行时长是因为我在scraper.py中设置了间歇10秒爬取一篇文章，我担心如果不间断爬取数据会被medium.com拒绝。
+如果输入的用户名合法，约两分钟后即可看到GUI窗口和命令行中的结果输出。</p></li>
+<li><p>示例用户名: ev, mikeAllen, fisforphantom。你可以在medium.com的页面上找到更多用户名。运行截图在picture文件夹中。</p></li>
+<li><p>结果说明：
+标签（形如'teen_f'） 中，'teen'表示年龄段为13-17岁，'adult'表示23-27岁，'mature'33-47岁；'f'表示女性，'m'表示男性。</p></li>
+</ol>
 
 <h3>
 <a id="user-content-原理简述" class="anchor" href="#%E5%8E%9F%E7%90%86%E7%AE%80%E8%BF%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>原理简述：</h3>
@@ -833,4 +838,16 @@ P(tag|V)=P(tag)*P(V1|tag)*P(V2|tag)*...*P(Vn|tag)/P(V)分别计算V在各类别�
 ├── teen_m.csv
 └── train.py
 </pre></div>
+
+<ol>
+<li>六个CSV文件均为数据文件，分别存储了六个类别人群的博客中不止出现一次的词语的出现概率。每一行有一个词语，一个数字，中间用逗号隔开，数字为该词语在这种人群的所有博客中出现的次数除以该人群博客中词语总数。</li>
+<li>train.py 是生成CSV文件的程序，将存储<a href="http://u.cs.biu.ac.il/%7Ekoppel/BlogCorpus.htm">BlogCorpus</a>这网页中数据集的绝对路径作为train.train()函数的参数得到六个CSV文件。</li>
+<li>scraper.py 是负责爬取博客的部分。起初打算使用最简单的urllib加BeautifulSoup，但是发现只有修改UA才能获取到数据。后来使用了Requests这个第三方库，解决了问题。scraper.py中只有一个函数，这个函数接受一个medium用户名，返回标题出现在<a href="https://medium.com/@userid/latest">https://medium.com/@userid/latest</a> 这个页面上的文章。默认数量是10篇。获取文章之后，会把requests.get()返回值的content解释成BeautifulSoup对象。在这个返回的对象中，<code>&lt;div class="layoutSingleColumn"&gt;</code>这类DOM元素的href参数是文章地址，在文章中，<code>&lt;div class="section-inner"&gt;</code>这类DOM下的<code>&lt;p&gt;</code>子元素中存储这文章内容，使用BeautifulSoup提供的方法可以轻松的取出它，然后存储在以当前userid命名的文件夹一个txt文件中。这个txt文件的数字部分是它在网页上出现的序列号。</li>
+<li>prepare.py 负责处理爬取到的文章。我在程序中添加了详细的注释。这份程序是在做这份大作业之前写的。后来我看了PEP8的文档，所以除了prepare.py之外的程序中变量名都是小写字母加下划线，只有prepare.py中使用了混合大小写。</li>
+<li>main.py 是主程序，所有GUI相关元素都在这个程序里。
+其中的MainWin类是主窗口。主要部件有：提示语，提示操作方法；输入框，接受输入；按钮，开始分类。
+按下按钮后，输入框中若没e有内容，会显示一条错误信息，如果正确，会调用analyze函数，生成一个列表，长度为得到的用户文章数目，results[i]表示第i+1篇文章的分类结果。得到这个分类结果之后，会把它逐条显示在GUI窗口中。最后，会显示出现次数最多的分类标签作为最终猜测。
+analyze函数接受一个参数userid，即想要分析的medium用户名，先调用scraper.py中的get_rec10()函数，得到最近文章，然后调用prepare.py中的prepare函数，得到每篇文章中出现次数最多的30个单词，对每一个标签，计算这30个单词在这个标签的语料中出现的频率乘积(基于朴素贝叶斯分类器的独立假设)，其中没有在CSV文件中的词语(即没有在语料中出现过一次以上的)按出现一次计算，算出一个似然率，根据上面原理部分的公式，每个似然率只有之前计算的部分不同(假设各个标签与所有词语出现的概率相同)，所以用这个连乘积来相互比较，这个联合概率最大的标签作为此次猜测的结果。存储在results列表中。
+除了在GUI窗口显示外，结果也会打印在命令行中。</li>
+</ol>
 </article></body></html>
