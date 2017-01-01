@@ -48,10 +48,7 @@ def get_rec10(userid):
         link = div.find('a')['href']
         time.sleep(10)  #sleep for a while to avoid being banned
         articles.append(BeautifulSoup(requests.get(link).content, "html5lib"))
-    return articles
-
-
-def get_vec(userid, articles):
+    # process soup objects
     outpath = os.path.join('./', userid)
     if not os.path.exists(outpath):
         os.makedirs(outpath)
