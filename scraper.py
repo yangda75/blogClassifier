@@ -56,5 +56,7 @@ def get_rec10(userid):
     for article in articles:
         i += 1
         fout = open(os.path.join(outpath, 'article' + str(i) + '.txt'), 'w')
-        fout.write(article.find('div', {'class', 'section-inner'}).prettify())
+        for passage in article.find_all('div', {'class', 'section-inner'}):
+            for paragraph in passage.find_all('p'):
+                fout.write(paragraph.text)
         fout.close()
