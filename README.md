@@ -2,8 +2,7 @@
 
 # Medium 博客分类器
 
-作者：杨达 [@bill363yang](https://github.com/bill363yang)    
-学号：515020910119    
+作者：杨达 [@bill363yang](https://github.com/bill363yang)     
 邮箱：yangda@sjtu.edu.cn
      billyang363@gmail.com
 ### 功能简介
