@@ -1,3 +1,2 @@
 bs4
-matplotlib
 requests
