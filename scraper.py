@@ -42,12 +42,12 @@ def get_rec10(userid):
     """
     url = "https://medium.com/@" + userid + "/latest"
     user_page = requests.get(url)
-    soup = BeautifulSoup(user_page, "html5lib")
+    soup = BeautifulSoup(user_page.content, "html5lib")
     articles = []
     for div in soup.find_all('div', {'class', 'layoutSingleColumn'}):
         link = div.find('a')['href']
         time.sleep(10)  #sleep for a while to avoid being banned
-        articles.append(BeautifulSoup(requests.get(link), "html5lib"))
+        articles.append(BeautifulSoup(requests.get(link).content, "html5lib"))
     return articles
 
 

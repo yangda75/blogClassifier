@@ -114,4 +114,4 @@ def prepare(filePath):
     wordsVec, wordsCount = wordsFreq(f)
     hot = hotWords(wordsVec, 30)
 
-    return wordsVec, wordsCount, hot
+    return hot

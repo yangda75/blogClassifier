@@ -1,5 +1,11 @@
+<meta charset="utf-8">
+
 # Medium 博客分类器
 
+作者：杨达 [@bill363yang](https://github.com/bill363yang)    
+学号：515020910119    
+邮箱：yangda@sjtu.edu.cn
+     billyang363@gmail.com
 ### 功能简介
 
 从[medium.com](https://medium.com)上抓取文章，存储在本地然后分类，显示分类标签。
@@ -8,7 +14,7 @@
 **注意**: 本程序使用python3.5    
 GNU/Linux 或 macOS 命令行：    
 进入项目目录，运行
-```
+``` bash
 $ pip install -r requirements.txt
 $ python main.py
 ```
@@ -45,16 +51,27 @@ Windows 类似
   - 分类：
     1. 待分类文本的特征向量 V,
     2. 使用
-    P(tag|V)=P(tag)\*P(V_1_|tag)\*P(V_2_|tag)\*...\*P(V_n_|tag)/P(V)分别计算V在各类别中出现的概率，其中P(V)在V给定的情况下为一常数，可以忽略，
+    P(tag|V)=P(tag)\*P(V1|tag)\*P(V2|tag)\*...\*P(Vn|tag)/P(V)分别计算V在各类别中出现的概率，其中P(V)在V给定的情况下为一常数，可以忽略，
     3. 比较各个标签计算出的P(tag|V),取最大的作为该文本的类别。
 
-### 项目结构
-~~~~
+
+### 项目结构    
+
+``` bash
 $ tree .
-.    
-├── main.py    
-├── prepare.py    
-├── README.md    
-├── requirements.txt     
-└── scraper.py
-~~~~
+.
+├── adult_f.csv
+├── adult_m.csv
+├── main.py
+├── mature_f.csv
+├── mature_m.csv
+├── prepare.py
+├── README.html
+├── README.md
+├── requirements.txt
+├── scraper.py
+├── teen_f.csv
+├── teen_m.csv
+└── train.py
+
+```

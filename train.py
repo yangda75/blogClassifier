@@ -17,9 +17,10 @@ def count(file_path, vocab):
         if line[0] == '<':
             continue
         # rm punctuation
-        line.replace('-', ' ')
-        line.replace('&nbsp', ' ')
-        new_line = ''.join(c.lower() for c in line
+        new_line = line.replace('-', ' ')
+        new_line=new_line.replace('&nbsp', ' ')
+        new_line=new_line.replace('\t',' ')
+        new_line = ''.join(c.lower() for c in new_line
                            if c not in string.punctuation)
         for word in new_line.split(' '):
             tot += 1
