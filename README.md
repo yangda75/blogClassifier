@@ -1,5 +1,7 @@
 <meta charset="utf-8">
 
+# 这个项目是曾经的课程作业，代码惨不忍睹，但还是放在这里。由于medium.com网页的变化，这个项目的代码不是开箱即用的了。仅供参考。
+# DOES NOT WORK out of box
 # Medium 博客分类器
 
 作者：杨达 [@bill363yang](https://github.com/bill363yang)     
